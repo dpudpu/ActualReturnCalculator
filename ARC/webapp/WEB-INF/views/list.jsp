@@ -21,6 +21,10 @@
 <%--</c:if>--%>
 <br><br>
 
+<c:forEach items="${requestScope.arcList}" var="arc">
+    ${arc.gdsNm}  ${arc.investPeriod} ${arc.prfRto}  ${arc.myPrice} <br>
+</c:forEach>
+
 이름 : 홍길동 <br>
 내용 : 자바가...<br>
 <a href="/delete?id=1">삭제</a><br><br>
