@@ -53,8 +53,8 @@ public class ArcDao {
                     "WHERE inv.gds_cd = gds.gds_cd)A \n" +
                     "WHERE A.ROW_NUM BETWEEN ? AND ?;";
             ps = conn.prepareStatement(sql);
-            ps.setString(1,(Integer.parseInt(pg)*10-9)+"");
-            ps.setString(2,Integer.parseInt(pg)*10+"");
+            ps.setString(1,(Integer.parseInt(pg)*5-4)+"");
+            ps.setString(2,Integer.parseInt(pg)*5+"");
             rs = ps.executeQuery();
 
             while(rs.next()) {

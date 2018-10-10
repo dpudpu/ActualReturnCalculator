@@ -20,6 +20,10 @@
             margin: auto;
             text-align: center;
         }
+         p ,h1, a
+         {
+             text-align: center;
+         }
     </style>
 </head>
 <body>
@@ -58,10 +62,18 @@
             <td valign="middle">8%</td>
             <td valign="middle">${myGoodsList.cms}</td>
             <td valign="middle"><fmt:formatNumber value="${ myGoodsList.profits-(myGoodsList.profits*(myGoodsList.cms+8)/100) }" pattern="0.00"/></td>
-
         </tr>
     </c:forEach>
-</table>
+</table
+<br>
+<div class="page" display:block;>
+<c:forEach begin="1" end="${requestScope.page}" step="1" var="page">
+    <a href="http://localhost:8080/list?pg=${page}"><b>[${page}]</b></a>
+</c:forEach>
+</div>
+${requestScope.cnt}
+
+
 
 </body>
 </html>
