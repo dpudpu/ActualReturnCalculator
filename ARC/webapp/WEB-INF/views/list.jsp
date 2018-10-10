@@ -7,12 +7,23 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
+    <style>
+        table {
+            width: 80%;
+        }
+        table, th, td {
+            border: 1px solid #bcbcbc;
+            margin: auto;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<h1>list</h1>
+<h1>투자 리스트</h1>
 <%--<c:if test="${sessionScope.admin != 'true'}">--%>
     <%--<a href="/login">관리자 로그인</a>--%>
 <%--</c:if>--%>
@@ -21,12 +32,37 @@
 <%--</c:if>--%>
 <br><br>
 
-이름 : 홍길동 <br>
-내용 : 자바가...<br>
-<a href="/delete?id=1">삭제</a><br><br>
 
-이름 : 고길동 <br>
-내용 : 하하...<br>
-<a href="/delete?id=2">삭제</a><br><br>
+<table  >
+    <thead>
+    <tr>
+        <th valign="middle">번호</th>
+        <th valign="middle">상품명</th>
+        <th valign="middle">기간</th>
+        <th valign="middle">투자금액</th>
+        <th valign="middle">수익률(세전)</th>
+        <th valign="middle">수익금(세전)</th>
+        <th valign="middle">세금</th>
+        <th valign="middle">수수료</th>
+        <th valign="middle">예상 총 수익금</th>
+    </tr>
+    </thead>
+
+    <c:forEach items="${requestScope.myGoodsList}" var="myGoodsList">
+        <tr>
+            <td valign="middle">${myGoodsList.rownum}</td>
+            <td valign="middle">${myGoodsList.goodsName}</td>
+            <td valign="middle">${myGoodsList.investPeriod}</td>
+            <td valign="middle">${myGoodsList.myPrice}</td>
+            <td valign="middle">${myGoodsList.prfRto}</td>
+            <td valign="middle">${myGoodsList.profits}</td>
+            <td valign="middle">8%</td>
+            <td valign="middle">${myGoodsList.cms}</td>
+            <td valign="middle"><fmt:formatNumber value="${ myGoodsList.profits-(myGoodsList.profits*(myGoodsList.cms+8)/100) }" pattern="0.00"/></td>
+
+        </tr>
+    </c:forEach>
+</table>
+
 </body>
 </html>
