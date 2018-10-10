@@ -1,6 +1,7 @@
 package my.examples.arc.dao;
 
 import my.examples.arc.servlet.ArcDto;
+import my.examples.arc.servlet.MyGoodsListDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -72,6 +73,7 @@ public class ArcDao {
     my_inv_prc	double(10,2)*/
 
 
+  /*
     public int addGoods(ArcDto arcDto) {
         int count = 0;
         Connection conn = null;
@@ -93,6 +95,7 @@ public class ArcDao {
         }
         return count;
     }
+    
     //내투자목록상품등록
     public int addMyGoods(ArcDto arcDto) {
         int count = 0;
@@ -109,13 +112,45 @@ public class ArcDao {
             ps.setInt(3, arcDto.getInvestPeriod());
             ps.setDouble(4, arcDto.getInvestPrice());
             count = ps.executeUpdate();
+            */
+    public List<MyGoodsListDto> getMyGoodsListDto() {
+        List<MyGoodsListDto> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try{
+            conn = DbUtil.connect(dbUrl, dbId, dbPassword);
+            String sql ="SET @rownum:=0;";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            sql =   "SELECT @rownum:=@rownum+1, \n" +
+                    "\tm.gds_nm , g.prf_rto, g.cms, inv.inv_prod, inv.my_inv_prc, g.cms \n" +
+                    "FROM my_inv_lst inv, inv_gds_lst g INNER JOIN gds_mst m \n" +
+                    "ON g.gds_cd=m.gds_cd \n" +
+                    "where inv.gds_cd = g.gds_cd; \n";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                MyGoodsListDto myGoodsListDto = new MyGoodsListDto();
+
+                myGoodsListDto.setRownum(rs.getInt(1));
+                myGoodsListDto.setGoodsName(rs.getString(2));
+                myGoodsListDto.setPrfRto(rs.getLong(3));
+                myGoodsListDto.setInvestPeriod(rs.getInt(4));
+                myGoodsListDto.setMyPrice(rs.getInt(5));
+                myGoodsListDto.setCms(rs.getDouble("g.cms"));
+                myGoodsListDto.setProfits(myGoodsListDto.getMyPrice()+myGoodsListDto.getMyPrice()*myGoodsListDto.getPrfRto()/100);
+                list.add(myGoodsListDto);
+            }
 
         }catch (Exception ex) {
             ex.printStackTrace();
         }finally {
-            DbUtil.close(conn, ps);
+            DbUtil.close(conn, ps, rs);
         }
-        return count;
+        return list;
     }
-
 }

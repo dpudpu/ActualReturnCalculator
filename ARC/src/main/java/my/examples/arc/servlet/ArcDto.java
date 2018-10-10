@@ -12,15 +12,6 @@ public class ArcDto {
     private int gdsCd;
     private double investPrice;
 
-
-    /*public ArcDto(int idx, String id, int idxCode, int investPeriod, int myPrice) {
-        this.idx = idx;
-        this.id = id;
-        this.idxCode = idxCode;
-        this.investPeriod = investPeriod;
-        this.myPrice = myPrice;
-    }*/
-
     public ArcDto() {
     }
 
