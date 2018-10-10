@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DbUtil {
     public static Connection connect(String dbUrl, String dbId, String dbPassword)
-            throws RuntimeException {
+        throws RuntimeException {
         Connection conn = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -24,7 +24,7 @@ public class DbUtil {
         }
         if(conn != null) {
             try{
-                conn.close();
+               conn.close();
             }catch (SQLException ex) {}
         }
     } //close

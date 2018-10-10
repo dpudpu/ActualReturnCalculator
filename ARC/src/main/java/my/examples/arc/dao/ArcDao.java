@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArcDao {
-    private String dbUrl = "jdbc:mysql://localhost:3306/arc?useSSL=false& serverTimezone=UTC";
-    private String dbId = "root";
-    private String dbPassword = "root";
+    private String dbUrl = "jdbc:mysql://localhost:3306/test?userSSL=false";
+    private String dbId = "mysql";
+    private String dbPassword = "mysql";
 
     public List<ArcDto> getArcDtoList() {
         List<ArcDto> list = new ArrayList<>();
@@ -52,6 +52,67 @@ public class ArcDao {
         return list;
     }
 
+    /*INV_GDS_LST
+    igl_idx	int(10) unsigned
+    gds_cd	int(10)
+    prf_rto	float(7,2)
+    cms	double(10,2)
+
+    MEMBER
+    mb_idx	int(10) unsigned
+    id	varchar(20)
+    name	varchar(20)
+    pw	varchar(20)
+    email	varchar(50)
+
+    MY_INV_LST
+    my_idx	int(10) unsigned
+    id	varchar(20)
+    gds_cd	varchar(20)
+    inv_prod	int(10)
+    my_inv_prc	double(10,2)*/
+
+
+  /*
+    public int addGoods(ArcDto arcDto) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try{
+            conn = DbUtil.connect(dbUrl, dbId, dbPassword);
+            String sql = "insert into inv_gds_lst (gds_cd, prf_rto, cms)\n" +
+                            "values (?, ?, ?)";
+            //db에넣어야지
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, arcDto.getIdx());
+            ps.setLong(2, arcDto.getPrfRto());
+            ps.setFloat(3, arcDto.getCms());
+            count = ps.executeUpdate();
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }finally {
+            DbUtil.close(conn, ps);
+        }
+        return count;
+    }
+    
+    //내투자목록상품등록
+    public int addMyGoods(ArcDto arcDto) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try{
+            conn = DbUtil.connect(dbUrl, dbId, dbPassword);
+            String sql = "insert into my_inv_lst (id, gds_cd, inv_prod, my_inv_prc)\n" +
+                            "values (?, ?, ?, ?)";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, arcDto.getId());
+            ps.setInt(2, arcDto.getGdsCd());
+            ps.setInt(3, arcDto.getInvestPeriod());
+            ps.setDouble(4, arcDto.getInvestPrice());
+            count = ps.executeUpdate();
+            */
     public List<MyGoodsListDto> getMyGoodsListDto() {
         List<MyGoodsListDto> list = new ArrayList<>();
         Connection conn = null;

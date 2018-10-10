@@ -8,15 +8,9 @@ public class ArcDto {
     private int idx;
     private String id;
     private int idxCode;
-
-
-    /*public ArcDto(int idx, String id, int idxCode, int investPeriod, int myPrice) {
-        this.idx = idx;
-        this.id = id;
-        this.idxCode = idxCode;
-        this.investPeriod = investPeriod;
-        this.myPrice = myPrice;
-    }*/
+    private float cms;
+    private int gdsCd;
+    private double investPrice;
 
     public ArcDto() {
     }
@@ -82,5 +76,29 @@ public class ArcDto {
 
     public void setMyPrice(int myPrice) {
         this.myPrice = myPrice;
+    }
+
+    public float getCms() {
+        return cms;
+    }
+
+    public void setCms(float cms) {
+        this.cms = cms;
+    }
+
+    public int getGdsCd() {
+        return gdsCd;
+    }
+
+    public void setGdsCd(int gdsCd) {
+        this.gdsCd = gdsCd;
+    }
+
+    public double getInvestPrice() {
+        return investPrice;
+    }
+
+    public void setInvestPrice(double investPrice) {
+        this.investPrice = investPrice;
     }
 }

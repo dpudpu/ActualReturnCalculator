@@ -1,6 +1,5 @@
 package my.examples.arc.servlet;
 
-
 import my.examples.arc.dao.ArcDao;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +15,7 @@ public class ARCListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArcDao arcDao = new ArcDao();
+
         List<MyGoodsListDto> list = arcDao.getMyGoodsListDto();
 
 
