@@ -1,5 +1,7 @@
 package my.examples.arc.servlet;
 
+import my.examples.arc.dao.ArcDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
