@@ -5,6 +5,7 @@ import my.examples.arc.servlet.MyGoodsListDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -13,6 +14,8 @@ public class ArcDao {
     private Connection conn = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
+    private String url =null;
+    private Properties properties=null;
 
     private static final String host = "thjang-arc-20181008.mysql.database.azure.com";
     private static final String database = "arc";
@@ -21,19 +24,19 @@ public class ArcDao {
 
     // 생성과 동시에 DB 접속
     public ArcDao() {
-        String url = String.format("jdbc:mysql://%s/%s", host, database);
-        Properties properties = new Properties();
+        url = String.format("jdbc:mysql://%s/%s", host, database);
+        properties = new Properties();
         properties.setProperty("user", user);
         properties.setProperty("password", password);
         properties.setProperty("useSSL", "true");
         properties.setProperty("verifyServerCertificate", "true");
         properties.setProperty("requireSSL", "false");
         properties.setProperty("serverTimezone","UTC");
-        conn = DbUtil.connect(url, properties);
     }
 
     public List<MyGoodsListDto> getMyGoodsListDto(String pg) {
         List<MyGoodsListDto> list = new ArrayList<>();
+        conn = DbUtil.connect(url, properties);
         try{
             String sql=null;
 
@@ -76,11 +79,23 @@ public class ArcDao {
 
     public int getCnt(){
         int cnt=0;
+        conn = DbUtil.connect(url, properties);
+        try {
+            // 총 개수 Query
+            String sql ="SELECT COUNT(*)\n" +
+                    "FROM my_inv_lst inv, inv_gds_lst gds \n" +
+                    "WHERE inv.gds_cd = gds.gds_cd;";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
 
-        // 총 개수 Query
-        String sql ="SELECT COUNT(*)\n" +
-                "FROM my_inv_lst inv, inv_gds_lst gds \n" +
-                "WHERE inv.gds_cd = gds.gds_cd;";
+                cnt=rs.getInt(1);
+            }
+            System.out.println(cnt);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
         return cnt;
     }
