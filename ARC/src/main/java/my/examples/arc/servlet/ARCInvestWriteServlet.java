@@ -22,7 +22,7 @@ public class ARCInvestWriteServlet extends HttpServlet {
 
         ARCInvInputDto arcInvInputDto =
                 new ARCInvInputDto(invPrdName, invMoney, invPeriod);
-        ArcDao arcDao = new ArcDao(arcInvInputDto);
+//        ArcDao arcDao = new ArcDao(arcInvInputDto);
 
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/investinput.jsp");
