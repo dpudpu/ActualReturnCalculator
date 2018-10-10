@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ARCInvestWriteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/investinput.jsp");
         dispatcher.forward(req, resp);
