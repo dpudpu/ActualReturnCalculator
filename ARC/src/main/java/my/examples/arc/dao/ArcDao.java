@@ -161,4 +161,11 @@ public class ArcDao {
         return cnt;
     }
 
+    // 댓글 등록 SQL 전달
+    public int addReply() {
+        int count = 0;
+
+        return count;
+    }
+
 }
