@@ -73,7 +73,15 @@
 </div>
 ${requestScope.cnt}
 
+<div class="reply_list">
+    ID<br>
+    <textarea name="reply_content" cols="40" rows="5"></textarea><br>
+    <input type="submit" value="등록"><br><br>
 
+    ID2<br>
+    댓글 테스트<br>
+    수정 삭제 댓글<br>
+</div>
 
 </body>
 </html>
