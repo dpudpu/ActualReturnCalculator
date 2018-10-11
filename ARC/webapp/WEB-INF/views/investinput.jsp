@@ -23,7 +23,7 @@
         </select><br>
         투자 금액(원) : <input type="number" name="mymoney" min="1" required><br>
         투자 기간(개월) : <input type="number" name="investperiod" min="1" required><br>
-        <input type="submit" value="submit">
+        <input type="submit" value="내 투자 등록">
     </form>
 
 </body>
