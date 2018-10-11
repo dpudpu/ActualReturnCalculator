@@ -1,4 +1,4 @@
-package my.examples.arc.servlet;
+package my.examples.arc.dto;
 
 public class ARCInvInputDto {
     private int invPrdIdx;
