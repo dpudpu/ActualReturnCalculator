@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import my.examples.arc.servlet.ARCGdsMstDto;
+import my.examples.arc.servlet.ARCInvInputDto;
 
 public class ArcDao {
     private Connection conn = null;

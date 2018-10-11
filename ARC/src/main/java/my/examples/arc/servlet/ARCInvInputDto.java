@@ -1,22 +1,22 @@
 package my.examples.arc.servlet;
 
 public class ARCInvInputDto {
-    private String invPrdName;
+    private int invPrdIdx;
     private int invMoney;
     private int invPeriod;
 
-    public ARCInvInputDto(String invPrdName, int invMoney, int invPeriod) {
-        this.invPrdName = invPrdName;
+    public ARCInvInputDto(int invPrdIdx, int invMoney, int invPeriod) {
+        this.invPrdIdx = invPrdIdx;
         this.invMoney = invMoney;
         this.invPeriod = invPeriod;
     }
 
-    public String getInvPrdName() {
-        return invPrdName;
+    public int getInvPrdIdx() {
+        return invPrdIdx;
     }
 
-    public void setInvPrdName(String invPrdName) {
-        this.invPrdName = invPrdName;
+    public void setInvPrdIdx(int invPrdIdx) {
+        this.invPrdIdx = invPrdIdx;
     }
 
     public int getInvMoney() {
