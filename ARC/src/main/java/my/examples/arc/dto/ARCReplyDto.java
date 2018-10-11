@@ -6,6 +6,12 @@ public class ARCReplyDto {
     private int parent_idx;
     private String content;
 
+    public ARCReplyDto(int member_idx, Integer parent_idx, String content) {
+        this.member_idx = member_idx;
+        this.parent_idx = parent_idx;
+        this.content = content;
+    }
+
     public int getReply_idx() {
         return reply_idx;
     }
