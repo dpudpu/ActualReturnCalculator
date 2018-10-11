@@ -60,6 +60,7 @@ cmake-build-release/
 
 # IntelliJ
 out/
+src/resources/jdbc.properties
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
