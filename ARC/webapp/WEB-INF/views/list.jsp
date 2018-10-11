@@ -36,7 +36,7 @@
 <%--</c:if>--%>
 <br><br>
 
-<table  >
+<table>
     <thead>
     <tr>
         <th valign="middle">번호</th>
@@ -64,7 +64,7 @@
             <td valign="middle"><fmt:formatNumber value="${ myGoodsList.profits-(myGoodsList.profits*(myGoodsList.cms+8)/100) }" pattern="0.00"/></td>
         </tr>
     </c:forEach>
-</table
+</table>
 <br>
 <div class="page" display:block;>
 <c:forEach begin="1" end="${requestScope.page}" step="1" var="page">
