@@ -1,7 +1,11 @@
 package my.examples.arc.dao;
 
-import my.examples.arc.servlet.MyGoodsListDto;
+import my.examples.arc.dto.MyGoodsListDto;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,36 +13,34 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import my.examples.arc.servlet.ARCGdsMstDto;
-import my.examples.arc.servlet.ARCInvInputDto;
 
 public class ArcDao {
-    private Connection conn = null;
-    private PreparedStatement ps = null;
-    private ResultSet rs = null;
-    private String url =null;
-    private Properties properties=null;
+    private String dbURL=null;
+    private Properties properties;
 
-    private static final String host = "thjang-arc-20181008.mysql.database.azure.com";
-    private static final String database = "arc";
-    private static final String user = "arc@thjang-arc-20181008";
-    private static final String password = "school1017!";
-
-    // 생성과 동시에 DB 접속
     public ArcDao() {
-        url = String.format("jdbc:mysql://%s/%s", host, database);
-        properties = new Properties();
-        properties.setProperty("user", user);
-        properties.setProperty("password", password);
-        properties.setProperty("useSSL", "true");
-        properties.setProperty("verifyServerCertificate", "true");
-        properties.setProperty("requireSSL", "false");
-        properties.setProperty("serverTimezone","UTC");
+        try {
+//            FileInputStream file = new FileInputStream("../../../../../../../out/jdbc.properties");
+            FileReader file = new FileReader("C:\\fastcampus\\ActualReturnCalculator\\ARC\\out/jdbc.properties");
+            properties = new Properties();
+            properties.load(file);
+            dbURL = String.format("jdbc:mysql://%s/%s", properties.getProperty("host"), properties.getProperty("database"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public List<MyGoodsListDto> getMyGoodsListDto(String pg) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        conn = DbUtil.connect(dbURL,properties);
+
         List<MyGoodsListDto> list = new ArrayList<>();
-        conn = DbUtil.connect(url, properties);
         try{
             String sql=null;
 
@@ -80,8 +82,12 @@ public class ArcDao {
     }
 
     public int getCnt(){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        conn = DbUtil.connect(dbURL,properties);
+
         int cnt=0;
-        conn = DbUtil.connect(url, properties);
         try {
             // 총 개수 Query
             String sql ="SELECT COUNT(*)\n" +

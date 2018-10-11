@@ -5,12 +5,12 @@ import java.util.Properties;
 
 public class DbUtil {
 //    public static Connection connect(String dbUrl, String dbId, String dbPassword)
-    public static Connection connect(String dbUrl, Properties properties)
-            throws RuntimeException {
+    public static Connection connect(String dbURL, Properties properties)
+    throws RuntimeException {
         Connection conn = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(dbUrl, properties);
+            conn = DriverManager.getConnection(dbURL, properties);
         }catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -39,4 +39,5 @@ public class DbUtil {
         }
         close(conn, ps);
     } //close
+
 }
