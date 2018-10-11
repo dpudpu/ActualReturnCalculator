@@ -1,63 +1,70 @@
 package my.examples.arc.dao;
 
-import my.examples.arc.servlet.ArcDto;
 import my.examples.arc.servlet.MyGoodsListDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 public class ArcDao {
-    String host = "thjang-arc-20181008.mysql.database.azure.com";
-    String database = "arc";
-    String user = "arc@thjang-arc-20181008";
-    String password = "school1017!";
-//    private String dbUrl = "jdbc:mysql://thjang-arc-20181008.mysql.database.azure.com/arc?userSSL=false";
-//    private String dbId = "arc@thjang-arc-20181008";
-//    private String dbPassword = "school1017!";
+    private Connection conn = null;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
+    private String url =null;
+    private Properties properties=null;
 
-    public List<MyGoodsListDto> getMyGoodsListDto() {
+    private static final String host = "thjang-arc-20181008.mysql.database.azure.com";
+    private static final String database = "arc";
+    private static final String user = "arc@thjang-arc-20181008";
+    private static final String password = "school1017!";
+
+    // 생성과 동시에 DB 접속
+    public ArcDao() {
+        url = String.format("jdbc:mysql://%s/%s", host, database);
+        properties = new Properties();
+        properties.setProperty("user", user);
+        properties.setProperty("password", password);
+        properties.setProperty("useSSL", "true");
+        properties.setProperty("verifyServerCertificate", "true");
+        properties.setProperty("requireSSL", "false");
+        properties.setProperty("serverTimezone","UTC");
+    }
+
+    public List<MyGoodsListDto> getMyGoodsListDto(String pg) {
         List<MyGoodsListDto> list = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
+        conn = DbUtil.connect(url, properties);
         try{
-            String url = String.format("jdbc:mysql://%s/%s", host, database);
-            Properties properties = new Properties();
-            properties.setProperty("user", user);
-            properties.setProperty("password", password);
-            properties.setProperty("useSSL", "true");
-            properties.setProperty("verifyServerCertificate", "true");
-            properties.setProperty("requireSSL", "false");
-            properties.setProperty("serverTimezone","UTC");
+            String sql=null;
 
-//            conn = DbUtil.connect(dbUrl, dbId, dbPassword);
-            conn = DbUtil.connect(url, properties);
-            String sql ="SET @rownum:=0;";
+
+            // 투자리스트 게시판
+            sql ="SET @rownum:=0;";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
 
-            sql =   "SELECT @rownum:=@rownum+1, \n" +
-                    "\tm.gds_nm , g.prf_rto, g.cms, inv.inv_prod, inv.my_inv_prc, g.cms \n" +
-                    "FROM my_inv_lst inv, inv_gds_lst g INNER JOIN gds_mst m \n" +
-                    "ON g.gds_cd=m.gds_cd \n" +
-                    "where inv.gds_cd = g.gds_cd; \n";
+            sql =   "SELECT A.*\n" +
+                    "FROM (SELECT @rownum:=@rownum+1 AS ROW_NUM,\n" +
+                    "m.gds_nm , gds.prf_rto, inv.inv_prod, inv.my_inv_prc, gds.cms\n" +
+                    "FROM my_inv_lst inv, inv_gds_lst gds INNER JOIN gds_mst m ON gds.gds_cd = m.gds_cd\n" +
+                    "WHERE inv.gds_cd = gds.gds_cd)A \n" +
+                    "WHERE A.ROW_NUM BETWEEN ? AND ?;";
             ps = conn.prepareStatement(sql);
+            ps.setString(1,(Integer.parseInt(pg)*5-4)+"");
+            ps.setString(2,Integer.parseInt(pg)*5+"");
             rs = ps.executeQuery();
 
             while(rs.next()) {
                 MyGoodsListDto myGoodsListDto = new MyGoodsListDto();
-
                 myGoodsListDto.setRownum(rs.getInt(1));
                 myGoodsListDto.setGoodsName(rs.getString(2));
                 myGoodsListDto.setPrfRto(rs.getLong(3));
                 myGoodsListDto.setInvestPeriod(rs.getInt(4));
-                myGoodsListDto.setMyPrice(rs.getInt(5));
-                myGoodsListDto.setCms(rs.getDouble("g.cms"));
+                myGoodsListDto.setMyPrice(rs.getInt("A.my_inv_prc"));
+                myGoodsListDto.setCms(rs.getDouble("cms"));
                 myGoodsListDto.setProfits(myGoodsListDto.getMyPrice()+myGoodsListDto.getMyPrice()*myGoodsListDto.getPrfRto()/100);
                 list.add(myGoodsListDto);
             }
@@ -69,4 +76,28 @@ public class ArcDao {
         }
         return list;
     }
+
+    public int getCnt(){
+        int cnt=0;
+        conn = DbUtil.connect(url, properties);
+        try {
+            // 총 개수 Query
+            String sql ="SELECT COUNT(*)\n" +
+                    "FROM my_inv_lst inv, inv_gds_lst gds \n" +
+                    "WHERE inv.gds_cd = gds.gds_cd;";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+
+                cnt=rs.getInt(1);
+            }
+            System.out.println(cnt);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return cnt;
+    }
+
 }
