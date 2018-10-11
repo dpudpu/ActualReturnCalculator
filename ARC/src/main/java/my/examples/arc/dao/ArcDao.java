@@ -26,10 +26,9 @@ public class ArcDao {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    public List<MyGoodsListDto> getMyGoodsListDto(String pg) {
+    public List<MyGoodsListDto> getMyGoodsListDto(String pg, int posts) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -53,8 +52,8 @@ public class ArcDao {
                     "WHERE inv.gds_cd = gds.gds_cd)A \n" +
                     "WHERE A.ROW_NUM BETWEEN ? AND ?;";
             ps = conn.prepareStatement(sql);
-            ps.setString(1,(Integer.parseInt(pg)*5-4)+"");
-            ps.setString(2,Integer.parseInt(pg)*5+"");
+            ps.setInt(1,Integer.parseInt(pg)*posts-(posts-1));
+            ps.setInt(2,Integer.parseInt(pg)*posts);
             rs = ps.executeQuery();
 
             while(rs.next()) {
@@ -95,13 +94,9 @@ public class ArcDao {
 
                 cnt=rs.getInt(1);
             }
-            System.out.println(cnt);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
         return cnt;
     }
-
 }
