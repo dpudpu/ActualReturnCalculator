@@ -2,10 +2,7 @@ package my.examples.arc.dao;
 
 import my.examples.arc.dto.MyGoodsListDto;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,10 +17,9 @@ public class ArcDao {
 
     public ArcDao() {
         try {
-//            FileInputStream file = new FileInputStream("../../../../../../../out/jdbc.properties");
-            FileReader file = new FileReader("C:\\fastcampus\\ActualReturnCalculator\\ARC\\out/jdbc.properties");
+            InputStream in = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties");
             properties = new Properties();
-            properties.load(file);
+            properties.load(in);
             dbURL = String.format("jdbc:mysql://%s/%s", properties.getProperty("host"), properties.getProperty("database"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
