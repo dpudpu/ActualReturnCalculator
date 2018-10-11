@@ -43,7 +43,7 @@
 <%--</c:if>--%>
 <br><br>
 
-<table  >
+<table>
     <thead>
     <tr>
         <th valign="middle">번호</th>
@@ -71,7 +71,7 @@
             <td valign="middle"><fmt:formatNumber value="${ myGoodsList.profits-(myGoodsList.profits*(myGoodsList.cms+8)/100) }" pattern="0.00"/></td>
         </tr>
     </c:forEach>
-</table
+</table>
 <br>
 <div class="page" display:block;>
 <c:forEach begin="1" end="${requestScope.totalPage}" step="1" var="page">
@@ -79,7 +79,17 @@
 </c:forEach>
 </div>
 
+<div class="reply_list">
+    ID<br>
+    <form method="post" action="/reply">
+        <textarea name="reply_content" cols="40" rows="5"></textarea><br>
+        <input type="submit" value="등록"><br><br>
 
+        ID2<br>
+        댓글 테스트<br>
+        수정 삭제 댓글<br>
+    </form>
+</div>
 
 </body>
 </html>

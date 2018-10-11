@@ -30,14 +30,19 @@ public class ARCInvestWriteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int invPrdIdx = Integer.parseInt(req.getParameter("goodsidx"));
-        int invMoney = Integer.parseInt(req.getParameter("mymoney"));
-        int invPeriod = Integer.parseInt(req.getParameter("investperiod"));
+        try {
+            int invPrdIdx = Integer.parseInt(req.getParameter("goodsidx"));
+            int invMoney = Integer.parseInt(req.getParameter("mymoney"));
+            int invPeriod = Integer.parseInt(req.getParameter("investperiod"));
 
-        ARCInvInputDto arcInvInputDto =
-                new ARCInvInputDto(invPrdIdx, invMoney, invPeriod);
-        ArcDao arcDao = new ArcDao();
-        arcDao.addMyGoodsList(arcInvInputDto);
+            ARCInvInputDto arcInvInputDto =
+                    new ARCInvInputDto(invPrdIdx, invMoney, invPeriod);
+
+            ArcDao arcDao = new ArcDao();
+            arcDao.addMyGoodsList(arcInvInputDto);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         resp.sendRedirect("/list");
     }
