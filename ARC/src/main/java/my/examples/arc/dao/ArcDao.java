@@ -2,6 +2,7 @@ package my.examples.arc.dao;
 
 import my.examples.arc.dto.ARCGdsMstDto;
 import my.examples.arc.dto.ARCInvInputDto;
+import my.examples.arc.dto.ARCReplyDto;
 import my.examples.arc.dto.MyGoodsListDto;
 
 import java.io.*;
@@ -161,10 +162,29 @@ public class ArcDao {
         return cnt;
     }
 
-    // 댓글 등록 SQL 전달
-    public int addReply() {
-        int count = 0;
+    // 댓글 등록 SQL 전송
+    public int addReply(ARCReplyDto arcReplyDtoParam) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        conn = DbUtil.connect(dbURL,properties);
 
+        int count = 0;
+        ARCReplyDto arcReplyDto = arcReplyDtoParam;
+
+        try {
+            String sql = "INSERT INTO mb_rpy (mb_idx, prt_idx, content)"
+                + "VALUES(?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, arcReplyDto.getMember_idx());
+            ps.setInt(2, arcReplyDto.getParent_idx());
+            ps.setString(3, arcReplyDto.getContent());
+            count = ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DbUtil.close(conn, ps);
+        }
         return count;
     }
 
