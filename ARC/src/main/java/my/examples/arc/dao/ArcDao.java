@@ -1,5 +1,7 @@
 package my.examples.arc.dao;
 
+import my.examples.arc.dto.ARCGdsMstDto;
+import my.examples.arc.dto.ARCInvInputDto;
 import my.examples.arc.dto.MyGoodsListDto;
 
 import java.io.*;
@@ -27,6 +29,61 @@ public class ArcDao {
             e.printStackTrace();
         }
 
+    }
+
+    public int addMyGoodsList(ARCInvInputDto arcInvInputDtoParam) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        int count = 0;
+        ARCInvInputDto arcInvInputDto = arcInvInputDtoParam;
+        conn = DbUtil.connect(dbURL, properties);
+        try {
+            String sql = null;
+
+            sql = "INSERT INTO my_inv_lst ( id, gds_cd, inv_prod, my_inv_prc)"
+                    + "VALUES(?, ?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "kimId");
+            ps.setInt(2, arcInvInputDto.getInvPrdIdx());
+            ps.setInt(3, arcInvInputDto.getInvPeriod());
+            ps.setInt(4, arcInvInputDto.getInvMoney());
+            count = ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DbUtil.close(conn, ps);
+        }
+
+        return count;
+    }
+
+    public List<ARCGdsMstDto> getAllGoodsListDto() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<ARCGdsMstDto> list = new ArrayList<>();
+        conn = DbUtil.connect(dbURL, properties);
+        try {
+            String sql = null;
+            sql = "SELECT * FROM gds_mst ORDER BY gds_cd ASC";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ARCGdsMstDto arcGdsMstDto = new ARCGdsMstDto();
+                arcGdsMstDto.setGds_cd(rs.getInt(1));
+                arcGdsMstDto.setGds_nm(rs.getString(2));
+                list.add(arcGdsMstDto);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DbUtil.close(conn, ps, rs);
+        }
+        return list;
     }
 
     public List<MyGoodsListDto> getMyGoodsListDto(String pg) {
