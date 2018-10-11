@@ -19,16 +19,9 @@ public class ArcDao {
     private Properties properties;
 
     public ArcDao() {
-        try {
-            InputStream in = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties");
-            properties = new Properties();
-            properties.load(in);
-            dbURL = String.format("jdbc:mysql://%s/%s", properties.getProperty("host"), properties.getProperty("database"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        GetProperties gp = GetProperties.getInstance();
+        dbURL = gp.getDbURL();
+        properties = gp.getProperties();
     }
 
     public int addMyGoodsList(ARCInvInputDto arcInvInputDtoParam) {
@@ -96,8 +89,6 @@ public class ArcDao {
         List<MyGoodsListDto> list = new ArrayList<>();
         try{
             String sql=null;
-
-
             // 투자리스트 게시판
             sql ="SET @rownum:=0;";
             ps = conn.prepareStatement(sql);
