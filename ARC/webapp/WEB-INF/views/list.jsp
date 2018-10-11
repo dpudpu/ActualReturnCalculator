@@ -28,6 +28,13 @@
 </head>
 <body>
 <h1>투자 리스트</h1>
+<button onclick="location='/signUp'">회원가입</button>
+<div float:right>
+    <button onclick="location='/list?pg=${pg}&posts=3'">3</button>
+    <button onclick="location='/list?pg=${pg}&posts=5'">5</button>
+    <button onclick="location='/list?pg=${pg}&posts=7'">7</button>
+    <button onclick="location='/list?pg=${pg}&posts=10'">10</button>
+</div>
 <%--<c:if test="${sessionScope.admin != 'true'}">--%>
     <%--<a href="/login">관리자 로그인</a>--%>
 <%--</c:if>--%>
@@ -67,11 +74,10 @@
 </table>
 <br>
 <div class="page" display:block;>
-<c:forEach begin="1" end="${requestScope.page}" step="1" var="page">
-    <a href="http://localhost:8080/list?pg=${page}"><b>[${page}]</b></a>
+<c:forEach begin="1" end="${requestScope.totalPage}" step="1" var="page">
+    <a href="/list?pg=${page}&posts=${posts}"><b>[${page}]</b></a>
 </c:forEach>
 </div>
-${requestScope.cnt}
 
 <div class="reply_list">
     ID<br>
