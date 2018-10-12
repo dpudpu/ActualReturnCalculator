@@ -80,7 +80,7 @@
                     <input type="submit" class="btn btn-primary form-control" value="회원가입">
                 </div>
                 <div>
-                    <input type="reset" class="btn btn-toolbar form-control" value="취소">
+                    <input type="reset" class="btn btn-default form-control" value="취소">
                 </div>
             </form>
 

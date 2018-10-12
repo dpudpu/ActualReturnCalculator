@@ -5,6 +5,7 @@ import my.examples.arc.dto.MemberDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class MemberDao {
@@ -42,5 +43,30 @@ public class MemberDao {
 
 
         return count;
+    }
+
+    public int login(MemberDto memberDto) {
+        Connection conn;
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        conn=DbUtil.connect(dbURL,properties);
+
+
+        try {
+            String sql = "SELECT * FROM MEMBER WHERE id=? AND pw=?";
+            ps=conn.prepareStatement(sql);
+            ps.setString(1,memberDto.getId());
+            ps.setString(2,memberDto.getPassword());
+            rs = ps.executeQuery();
+            if (rs.next()){
+                return 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DbUtil.close(conn, ps,rs);
+        }
+
+        return -1;
     }
 }
