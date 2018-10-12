@@ -10,6 +10,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+    <link rel="stylesheet" href="css/custom.css">
+    <script src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="httpRequest.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
 
     <script language="javascript">
 
@@ -52,6 +60,34 @@
 </head>
 <body>
 
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <b class="navbar-brand">게시판 웹사이트</b>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><a href="list">게시판</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <c:if test="${sessionScope.user == null}">
+                <li><a href="/login">로그인</a></li>
+                <li><a href="/signUp">회원가입</a></li>
+            </c:if>
+            <c:if test="${sessionScope.user != null}">
+                <li class="navbar-text"><b>${sessionScope.user}</b>님 어서오세요.</li>
+                <li><a href="/logout">로그아웃</a></li>
+            </c:if>
+        </ul>
+    </div>
+</nav>
+
 
 <div class="container">
     <div class="col-lg-4"></div>
@@ -88,8 +124,6 @@
     </div>
 </div>
 
-<script src="js/bootstrap.js"></script>
-<script type="text/javascript" src="httpRequest.js"></script>
 
 </body>
 </html>
