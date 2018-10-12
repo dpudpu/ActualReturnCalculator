@@ -11,79 +11,104 @@
 <html>
 <head>
     <title>Title</title>
-    <style>
-        table {
-            width: 80%;
-        }
-        table, th, td {
-            border: 1px solid #bcbcbc;
-            margin: auto;
-            text-align: center;
-        }
-         p ,h1, a
-         {
-             text-align: center;
-         }
-    </style>
+
+    <meta name="viewport" content="width=device-width", initial-scale="1">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="httpRequest.js"></script>
+
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
 </head>
 <body>
-<h1>투자 리스트</h1>
-<c:if test="${sessionScope.user == null}">
-    <button onclick="location='/login'"> 로그인</button>
-    <button onclick="location='/signUp'">회원가입</button>
-</c:if>
-<c:if test="${sessionScope.user != null}">
-    <b>${sessionScope.user}</b>님 어서오세요.<button onclick="location='/logout'"> 로그아웃</button>
-</c:if>
-<div float:right>
-    <button onclick="location='/list?pg=${pg}&posts=3'">3</button>
-    <button onclick="location='/list?pg=${pg}&posts=5'">5</button>
-    <button onclick="location='/list?pg=${pg}&posts=7'">7</button>
-    <button onclick="location='/list?pg=${pg}&posts=10'">10</button>
-</div>
-<%--<c:if test="${sessionScope.admin != 'true'}">--%>
-    <%--<a href="/login">관리자 로그인</a>--%>
-<%--</c:if>--%>
-<%--<c:if test="${sessionScope.admin == 'true'}">--%>
-    <%--<a href="/logout">관리자 로그아웃</a>--%>
-<%--</c:if>--%>
-<br><br>
 
-<table>
-    <thead>
-    <tr>
-        <th valign="middle">번호</th>
-        <th valign="middle">상품명</th>
-        <th valign="middle">기간</th>
-        <th valign="middle">투자금액</th>
-        <th valign="middle">수익률(세전)</th>
-        <th valign="middle">수익금(세전)</th>
-        <th valign="middle">세금</th>
-        <th valign="middle">수수료</th>
-        <th valign="middle">예상 총 수익금</th>
-    </tr>
-    </thead>
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <b class="navbar-brand">게시판 웹사이트</b>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="list">게시판</a></li>
+            </ul>
 
-    <c:forEach items="${requestScope.myGoodsList}" var="myGoodsList">
-        <tr>
-            <td valign="middle">${myGoodsList.rownum}</td>
-            <td valign="middle">${myGoodsList.goodsName}</td>
-            <td valign="middle">${myGoodsList.investPeriod}</td>
-            <td valign="middle">${myGoodsList.myPrice}</td>
-            <td valign="middle">${myGoodsList.prfRto}</td>
-            <td valign="middle">${myGoodsList.profits}</td>
-            <td valign="middle">8%</td>
-            <td valign="middle">${myGoodsList.cms}</td>
-            <td valign="middle"><fmt:formatNumber value="${ myGoodsList.profits-(myGoodsList.profits*(myGoodsList.cms+8)/100) }" pattern="0.00"/></td>
-        </tr>
-    </c:forEach>
-</table>
-<br>
-<div class="page" display:block;>
-<c:forEach begin="1" end="${requestScope.totalPage}" step="1" var="page">
-    <a href="/list?pg=${page}&posts=${posts}"><b>[${page}]</b></a>
-</c:forEach>
-</div>
+            <ul class="nav navbar-nav navbar-right">
+                <c:if test="${sessionScope.user == null}">
+                    <li><a href="/login">로그인</a></li>
+                    <li><a href="/signUp">회원가입</a></li>
+                </c:if>
+                <c:if test="${sessionScope.user != null}">
+                    <li class="navbar-text"><b>${sessionScope.user}</b>님 어서오세요.</li>
+                    <li><a href="/logout">로그아웃</a></li>
+                </c:if>
+
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <h2>투자리스트 목록</h2>
+        <div class="dropdown pull-right" >
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                게시글 개수
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li class="active"><a href="/list?pg=${pg}&posts=3">3</a></li>
+                <li class><a href="/list?pg=${pg}&posts=5">5</a></li>
+                <li class><a href="/list?pg=${pg}&posts=7">7</a></li>
+                <li class><a href="/list?pg=${pg}&posts=10">10</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+                <thead>
+                    <tr>
+                        <th style="background-color: #eeeeee; text-align: center;">번호</th>
+                        <th style="background-color: #eeeeee; text-align: center;">상품명</th>
+                        <th style="background-color: #eeeeee; text-align: center;">기간</th>
+                        <th style="background-color: #eeeeee; text-align: center;">투자금액</th>
+                        <th style="background-color: #eeeeee; text-align: center;">수익률(세전)</th>
+                        <th style="background-color: #eeeeee; text-align: center;">수익금(세전)</th>
+                        <th style="background-color: #eeeeee; text-align: center;">세금</th>
+                        <th style="background-color: #eeeeee; text-align: center;">수수료</th>
+                        <th style="background-color: #eeeeee; text-align: center;">예상 총 수익금</th>
+                    </tr>
+                </thead>
+                <c:forEach items="${requestScope.myGoodsList}" var="myGoodsList">
+                    <tr>
+                        <td valign="middle">${myGoodsList.rownum}</td>
+                        <td valign="middle">${myGoodsList.goodsName}</td>
+                        <td valign="middle">${myGoodsList.investPeriod}</td>
+                        <td valign="middle">${myGoodsList.myPrice}</td>
+                        <td valign="middle">${myGoodsList.prfRto}</td>
+                        <td valign="middle">${myGoodsList.profits}</td>
+                        <td valign="middle">8%</td>
+                        <td valign="middle">${myGoodsList.cms}</td>
+                        <td valign="middle"><fmt:formatNumber value="${ myGoodsList.profits-(myGoodsList.profits*(myGoodsList.cms+8)/100) }" pattern="0.00"/></td>
+                    </tr>
+                </c:forEach>
+            </table>
+                <c:forEach begin="1" end="${requestScope.totalPage}" step="1" var="page">
+                    <a href="/list?pg=${page}&posts=${posts}" class="btn btn-success"><b>${page}</b></a>
+                </c:forEach>
+            <a href="" class="btn btn-primary pull-right">글쓰기</a>
+        </div>
+    </div>
+
+
+
+
+
 
 <div class="reply_list">
     <form method="post" action="/reply">
