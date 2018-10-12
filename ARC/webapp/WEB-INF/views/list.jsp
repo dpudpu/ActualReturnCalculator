@@ -28,7 +28,13 @@
 </head>
 <body>
 <h1>투자 리스트</h1>
-<button onclick="location='/signUp'">회원가입</button>
+<c:if test="${sessionScope.user == null}">
+    <button onclick="location='/login'"> 로그인</button>
+</c:if>
+<c:if test="${sessionScope.user != null}">
+    <button onclick="location='/logout'"> 로그아웃</button>
+    <button onclick="location='/signUp'">회원가입</button>
+</c:if>
 <div float:right>
     <button onclick="location='/list?pg=${pg}&posts=3'">3</button>
     <button onclick="location='/list?pg=${pg}&posts=5'">5</button>
