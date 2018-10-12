@@ -25,9 +25,17 @@ public class SignUpServlet extends HttpServlet {
         memberDto.setId(req.getParameter("userId"));
         memberDto.setPassword(req.getParameter("userPassword"));
         memberDto.setName(req.getParameter("userName"));
-        memberDto.setEmail(req.getParameter("uesrEmail"));
+        memberDto.setEmail(req.getParameter("userEmail"));
 
         MemberDao memberDao = new MemberDao();
-        int result = memberDao.signUp(memberDto);
+        try {
+            if (memberDao.signUp(memberDto)==0)
+                throw new Exception();
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("회원가입 INSERT 안됐음.");
+        }
+
+        resp.sendRedirect("/list");
     }
 }

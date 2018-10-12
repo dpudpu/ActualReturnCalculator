@@ -19,18 +19,21 @@ public class MemberDao {
 
 
     public int signUp(MemberDto memberDto){
-        Connection conn = null;
+        Connection conn;
         PreparedStatement ps = null;
-        ResultSet rs = null;
         conn = DbUtil.connect(dbURL,properties);
+        int count=0;
 
         try {
 
-            String sql = "INSERT INTO (id, name, pw, email)\n" +
+            String sql = "INSERT INTO MEMBER (id, name, pw, email)\n" +
                     "VALUES(?,?,?,?);";
             ps = conn.prepareStatement(sql);
-            ps.setString(1,"1");
-
+            ps.setString(1,memberDto.getId());
+            ps.setString(2,memberDto.getName());
+            ps.setString(3,memberDto.getPassword());
+            ps.setString(4,memberDto.getEmail());
+            count = ps.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -38,6 +41,6 @@ public class MemberDao {
         }
 
 
-        return 1;
+        return count;
     }
 }
