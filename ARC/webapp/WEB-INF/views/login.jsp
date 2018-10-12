@@ -11,6 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+    <link rel="stylesheet" href="css/custom.css">
 
     <script language="javascript">
 
@@ -42,6 +43,34 @@
     <title>회원가입</title>
 </head>
 <body>
+
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <b class="navbar-brand">게시판 웹사이트</b>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><a href="list">게시판</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <c:if test="${sessionScope.user == null}">
+                <li><a href="/login">로그인</a></li>
+                <li><a href="/signUp">회원가입</a></li>
+            </c:if>
+            <c:if test="${sessionScope.user != null}">
+                <li class="navbar-text"><b>${sessionScope.user}</b>님 어서오세요.</li>
+                <li><a href="/logout">로그아웃</a></li>
+            </c:if>
+        </ul>
+    </div>
+</nav>
 
 <c:if test="${msg==-1}">
     <script>alert('아이디 혹은 패스워드가 일치하지 않습니다.');</script>
