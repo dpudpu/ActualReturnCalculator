@@ -185,4 +185,37 @@ public class ArcDao {
         return count;
     }
 
+    // 댓글 가져오기
+    public List<ARCReplyDto> getReply() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        conn = DbUtil.connect(dbURL,properties);
+
+        List<ARCReplyDto> list = new ArrayList<>();
+
+        try {
+            String sql = "SELECT member.mb_idx, id, rpy_idx, prt_idx, content\n"
+                    + "FROM member INNER JOIN mb_rpy ON member.mb_idx=mb_rpy.mb_idx";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ARCReplyDto arcReplyDto = new ARCReplyDto();
+                arcReplyDto.setMember_idx(rs.getInt(1));
+                arcReplyDto.setMember_id(rs.getString(2));
+                arcReplyDto.setReply_idx(rs.getInt(3));
+                arcReplyDto.setParent_idx(rs.getInt(4));
+                arcReplyDto.setContent(rs.getString(5));
+                list.add(arcReplyDto);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DbUtil.close(conn, ps, rs);
+        }
+
+        return list;
+    }
+
 }

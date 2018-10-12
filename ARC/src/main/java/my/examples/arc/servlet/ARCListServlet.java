@@ -2,6 +2,7 @@ package my.examples.arc.servlet;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import my.examples.arc.dao.ArcDao;
+import my.examples.arc.dto.ARCReplyDto;
 import my.examples.arc.dto.MyGoodsListDto;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -44,6 +46,13 @@ public class ARCListServlet extends HttpServlet {
         // DAO에 id 입력후 투자 한 상품 목록 출력
 
         // List에 투자상품 목록 Dto 담기
+
+        // 댓글 목록 보여주기
+        ArcDao getReplyDao = new ArcDao();
+        List<ARCReplyDto> arcReplyList = new ArrayList<>();
+        arcReplyList = getReplyDao.getReply();
+        req.setAttribute("replylist", arcReplyList);
+        req.setAttribute("replysize", arcReplyList.size());
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/list.jsp");
         dispatcher.forward(req, resp);

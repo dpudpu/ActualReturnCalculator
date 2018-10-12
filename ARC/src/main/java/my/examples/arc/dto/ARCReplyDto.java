@@ -3,13 +3,24 @@ package my.examples.arc.dto;
 public class ARCReplyDto {
     private int reply_idx;
     private int member_idx;
+    private String member_id;
     private int parent_idx;
     private String content;
+
+    public ARCReplyDto() {}
 
     public ARCReplyDto(int member_idx, Integer parent_idx, String content) {
         this.member_idx = member_idx;
         this.parent_idx = parent_idx;
         this.content = content;
+    }
+
+    public String getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
     }
 
     public int getReply_idx() {
