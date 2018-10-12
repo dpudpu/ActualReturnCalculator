@@ -1,11 +1,30 @@
 package my.examples.arc.dto;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class ARCReplyDto {
     private int reply_idx;
     private int member_idx;
     private String member_id;
     private int parent_idx;
     private String content;
+    private long reply_time;
+
+    public LocalDateTime getReply_time() {
+        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochMilli(reply_time), TimeZone.getDefault().toZoneId());
+
+        return ldt;
+    }
+
+    public void setReply_time(long reply_time) {
+        this.reply_time = reply_time;
+    }
 
     public ARCReplyDto() {}
 

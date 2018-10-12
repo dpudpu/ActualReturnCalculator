@@ -6,13 +6,10 @@ import my.examples.arc.dto.ARCReplyDto;
 import my.examples.arc.dto.MyGoodsListDto;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
 public class ArcDao {
     private String dbURL=null;
@@ -181,12 +178,14 @@ public class ArcDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+9"));
+
         conn = DbUtil.connect(dbURL,properties);
 
         List<ARCReplyDto> list = new ArrayList<>();
 
         try {
-            String sql = "SELECT member.mb_idx, id, rpy_idx, prt_idx, content\n"
+            String sql = "SELECT member.mb_idx, id, rpy_idx, prt_idx, content, rpy_time\n"
                     + "FROM member INNER JOIN mb_rpy ON member.mb_idx=mb_rpy.mb_idx";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -198,6 +197,8 @@ public class ArcDao {
                 arcReplyDto.setReply_idx(rs.getInt(3));
                 arcReplyDto.setParent_idx(rs.getInt(4));
                 arcReplyDto.setContent(rs.getString(5));
+                arcReplyDto.setReply_time(rs.getTimestamp(6, cal).getTime());
+
                 list.add(arcReplyDto);
             }
         } catch (Exception ex) {
