@@ -5,7 +5,7 @@
   Time: 오후 1:55
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
@@ -94,7 +94,12 @@
     <c:forEach items="${requestScope.replylist}" var="replylist">
         ${replylist.member_id} 작성 시간 : ${replylist.getReply_time()}<br>
         ${replylist.content}<br><br>
-        수정 삭제 댓글<br>
+        <a href="/reply/modify">수정</a>
+        <form method="post" action="/reply/delete">
+            <input type="hidden" name="reply_idx" value="${replylist.reply_idx}" />
+            <button value="삭제">삭제</button>
+        </form>
+        <a href="/reply/tagreply">댓글</a><br>
     </c:forEach>
 </div>
 
