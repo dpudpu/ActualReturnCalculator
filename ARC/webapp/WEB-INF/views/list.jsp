@@ -30,10 +30,10 @@
 <h1>투자 리스트</h1>
 <c:if test="${sessionScope.user == null}">
     <button onclick="location='/login'"> 로그인</button>
+    <button onclick="location='/signUp'">회원가입</button>
 </c:if>
 <c:if test="${sessionScope.user != null}">
-    <button onclick="location='/logout'"> 로그아웃</button>
-    <button onclick="location='/signUp'">회원가입</button>
+    <b>${sessionScope.user}</b>님 어서오세요.<button onclick="location='/logout'"> 로그아웃</button>
 </c:if>
 <div float:right>
     <button onclick="location='/list?pg=${pg}&posts=3'">3</button>
