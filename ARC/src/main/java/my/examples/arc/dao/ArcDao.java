@@ -210,4 +210,44 @@ public class ArcDao {
         return list;
     }
 
+    public int deleteReply(int reply_idx) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        conn = DbUtil.connect(dbURL,properties);
+        int count = 0;
+
+        try {
+            String sql = "DELETE FROM mb_rpy WHERE rpy_idx = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, reply_idx);
+            count = ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DbUtil.close(conn, ps);
+        }
+
+        return count;
+    }
+
+    public int modifyReply(int reply_idx, String content) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        conn = DbUtil.connect(dbURL,properties);
+        int count = 0;
+
+        try {
+            String sql = "UPDATE mb_rpy SET content = ? WHERE rpy_idx = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, content);
+            ps.setInt(2, reply_idx);
+            count = ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DbUtil.close(conn, ps);
+        }
+
+        return count;
+    }
 }
