@@ -80,15 +80,16 @@
 </div>
 
 <div class="reply_list">
-    ID<br>
     <form method="post" action="/reply">
+        ID(연동안됨)<br>
         <textarea name="reply_content" cols="40" rows="5"></textarea><br>
         <input type="submit" value="등록"><br><br>
-
-        ID2<br>
-        댓글 테스트<br>
-        수정 삭제 댓글<br>
     </form>
+    <c:forEach items="${requestScope.replylist}" var="replylist">
+        ${replylist.member_id} 작성 시간 : ${replylist.getReply_time()}<br>
+        ${replylist.content}<br><br>
+        수정 삭제 댓글<br>
+    </c:forEach>
 </div>
 
 </body>
