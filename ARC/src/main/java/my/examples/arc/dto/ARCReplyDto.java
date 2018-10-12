@@ -28,10 +28,14 @@ public class ARCReplyDto {
 
     public ARCReplyDto() {}
 
-    public ARCReplyDto(int member_idx, Integer parent_idx, String content) {
+    public ARCReplyDto(int member_idx, String content){
         this.member_idx = member_idx;
-        this.parent_idx = parent_idx;
         this.content = content;
+    }
+
+    public ARCReplyDto(int member_idx, Integer parent_idx, String content) {
+        this(member_idx, content);
+        this.parent_idx = parent_idx;
     }
 
     public String getMember_id() {
