@@ -1,16 +1,17 @@
 package my.examples.arc.dao;
 
 import java.sql.*;
-import java.util.Properties;
 
 public class DbUtil {
 //    public static Connection connect(String dbUrl, String dbId, String dbPassword)
-    public static Connection connect(String dbURL, Properties properties)
+    public static Connection connect()
     throws RuntimeException {
         Connection conn = null;
         try{
+            PropertiesUtil propertiesUtil = PropertiesUtil.getInstance();
+
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(dbURL, properties);
+            conn = DriverManager.getConnection(propertiesUtil.getDbURL(), propertiesUtil.getProperties());
         }catch (Exception ex) {
             throw new RuntimeException(ex);
         }

@@ -5,21 +5,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class GetProperties {
+public class PropertiesUtil {
     private String dbURL=null;
     private Properties properties;
 
-    private static GetProperties instance;
+    private static PropertiesUtil instance = new PropertiesUtil();
 
-    public static GetProperties getInstance(){
-        if(instance==null){
-            instance = new GetProperties();
-        }
+    public static PropertiesUtil getInstance(){
         return instance;
     }
 
 
-    private GetProperties() {
+    private PropertiesUtil() {
         try {
             InputStream in = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties");
             properties = new Properties();

@@ -1,6 +1,6 @@
 package my.examples.arc.servlet;
 
-import my.examples.arc.dao.ArcDao;
+import my.examples.arc.dao.GoodsPostDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,8 +32,8 @@ public class ARCReplyModifyServlet extends HttpServlet {
 //        int reply_idx = Integer.parseInt(req.getParameter("reply_idx"));
         int reply_idx = 1;
         String content = req.getParameter("reply_content");
-        ArcDao arcDao = new ArcDao();
-        arcDao.modifyReply(reply_idx, content);
+        GoodsPostDao goodsPostDao = new GoodsPostDao();
+        goodsPostDao.modifyReply(reply_idx, content);
 
         resp.sendRedirect("/list");
     }
