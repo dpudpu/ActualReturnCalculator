@@ -26,12 +26,7 @@ public class ARCReplyDeleteServlet extends HttpServlet {
         try {
             goodsPostDao.deleteReply(replyIdx);
         } catch (RuntimeException re) {
-            PrintWriter out = resp.getWriter();
-            out.println("<script language='javascript'>");
-            out.println("alert('댓글 삭제에 실패하였습니다.');");
-            out.println("window.location.href = \"/\";");
-            out.println("</script>");
-            out.close();
+            resp.sendRedirect("error.jsp");
         }
 
         resp.sendRedirect("/list");

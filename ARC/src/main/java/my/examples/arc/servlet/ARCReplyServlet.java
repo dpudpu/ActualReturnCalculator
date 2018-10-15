@@ -32,12 +32,7 @@ public class ARCReplyServlet extends HttpServlet {
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            PrintWriter out = resp.getWriter();
-            out.println("<script language='javascript'>");
-            out.println("alert('댓글을 불러오는 도중 오류가 발생하였습니다.');");
-            out.println("window.location.href = \"/\";");
-            out.println("</script>");
-            out.close();
+            resp.sendRedirect("error.jsp");
         }
         resp.sendRedirect("/list");
     }
