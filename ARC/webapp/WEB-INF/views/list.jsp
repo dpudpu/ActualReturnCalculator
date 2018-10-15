@@ -109,7 +109,7 @@
 <div class="reply_list">
     <form method="post" action="/reply">
         ID(연동안됨)<br>
-        <textarea name="reply_content" cols="40" rows="5"></textarea><br>
+        <textarea name="replyContent" cols="40" rows="5"></textarea><br>
         <input type="submit" value="등록"><br><br>
     </form>
     <c:forEach items="${requestScope.replylist}" var="replylist">
@@ -117,7 +117,7 @@
         ${replylist.content}<br><br>
         <a href="/reply/modify">수정</a>
         <form method="post" action="/reply/delete">
-            <input type="hidden" name="reply_idx" value="${replylist.reply_idx}" />
+            <input type="hidden" name="replyIdx" value="${replylist.replyIdx}" />
             <button value="삭제">삭제</button>
         </form>
         <a href="/reply/tagreply">댓글</a><br>

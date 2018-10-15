@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/reply/delete")
 public class ARCReplyDeleteServlet extends HttpServlet {
@@ -20,9 +21,18 @@ public class ARCReplyDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // 삭제하려는 댓글의 id와 현재 로그인 한 id가 일치하는 경우
-        int reply_idx =  Integer.parseInt(req.getParameter("reply_idx"));
+        int replyIdx =  Integer.parseInt(req.getParameter("replyIdx"));
         GoodsPostDao goodsPostDao = new GoodsPostDao();
-        goodsPostDao.deleteReply(reply_idx);
+        try {
+            goodsPostDao.deleteReply(replyIdx);
+        } catch (RuntimeException re) {
+            PrintWriter out = resp.getWriter();
+            out.println("<script language='javascript'>");
+            out.println("alert('댓글 삭제에 실패하였습니다.');");
+            out.println("window.location.href = \"/\";");
+            out.println("</script>");
+            out.close();
+        }
 
         resp.sendRedirect("/list");
 
