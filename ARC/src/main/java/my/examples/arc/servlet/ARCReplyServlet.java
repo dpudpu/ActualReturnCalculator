@@ -1,6 +1,6 @@
 package my.examples.arc.servlet;
 
-import my.examples.arc.dao.ArcDao;
+import my.examples.arc.dao.GoodsPostDao;
 import my.examples.arc.dto.ARCReplyDto;
 
 import javax.servlet.ServletException;
@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URLEncoder;
 
 @WebServlet("/reply")
 public class ARCReplyServlet extends HttpServlet {
     // 댓글 추가 / 수정 / 삭제
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArcDao arcDao = new ArcDao();
+        GoodsPostDao goodsPostDao = new GoodsPostDao();
         req.setCharacterEncoding("UTF-8");
         String content = req.getParameter("reply_content");
         try {
@@ -27,7 +26,7 @@ public class ARCReplyServlet extends HttpServlet {
 //                        = new ARCReplyDto(1, null, content);
                 ARCReplyDto arcReplyDto
                         = new ARCReplyDto(1, content);
-                arcDao.addReply(arcReplyDto);
+                goodsPostDao.addReply(arcReplyDto);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

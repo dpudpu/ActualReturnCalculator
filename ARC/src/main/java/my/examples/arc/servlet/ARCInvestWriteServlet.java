@@ -1,7 +1,5 @@
 package my.examples.arc.servlet;
 
-import my.examples.arc.dao.ArcDao;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import my.examples.arc.dao.GoodsPostDao;
+import my.examples.arc.dao.InvestListBoardDao;
 import my.examples.arc.dto.ARCGdsMstDto;
 import my.examples.arc.dto.ARCInvInputDto;
 
@@ -20,8 +20,8 @@ public class ARCInvestWriteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<ARCGdsMstDto> list = new ArrayList<>();
-        ArcDao arcDao = new ArcDao();
-        list = arcDao.getAllGoodsListDto();
+        InvestListBoardDao investListBoardDao = new InvestListBoardDao();
+        list = investListBoardDao.getAllGoodsList();
         req.setAttribute("allGoodsList", list);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/investinput.jsp");
@@ -38,8 +38,8 @@ public class ARCInvestWriteServlet extends HttpServlet {
             ARCInvInputDto arcInvInputDto =
                     new ARCInvInputDto(invPrdIdx, invMoney, invPeriod);
 
-            ArcDao arcDao = new ArcDao();
-            arcDao.addMyGoodsList(arcInvInputDto);
+            GoodsPostDao goodsPostDao = new GoodsPostDao();
+            goodsPostDao.addMyGoodsList(arcInvInputDto);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

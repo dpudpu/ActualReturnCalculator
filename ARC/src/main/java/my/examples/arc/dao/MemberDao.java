@@ -9,20 +9,11 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class MemberDao {
-    private String dbURL;
-    private Properties properties;
-
-    public MemberDao(){
-        GetProperties gp = GetProperties.getInstance();
-        dbURL = gp.getDbURL();
-        properties = gp.getProperties();
-    }
-
 
     public int signUp(MemberDto memberDto){
         Connection conn;
         PreparedStatement ps = null;
-        conn = DbUtil.connect(dbURL,properties);
+        conn = DbUtil.connect();
         int count=0;
 
         try {
@@ -40,8 +31,6 @@ public class MemberDao {
         } finally {
             DbUtil.close(conn, ps);
         }
-
-
         return count;
     }
 
@@ -49,8 +38,7 @@ public class MemberDao {
         Connection conn;
         PreparedStatement ps=null;
         ResultSet rs=null;
-        conn=DbUtil.connect(dbURL,properties);
-
+        conn=DbUtil.connect();
 
         try {
             String sql = "SELECT * FROM MEMBER WHERE id=? AND pw=?";
@@ -66,7 +54,6 @@ public class MemberDao {
         }finally {
             DbUtil.close(conn, ps,rs);
         }
-
         return -1;
     }
 }
