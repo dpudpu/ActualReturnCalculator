@@ -10,8 +10,8 @@
         상품 이름 :
         <select name="goodsidx">
             <c:forEach items="${requestScope.allGoodsList}" var="allGoodsList">
-                <option value="${allGoodsList.gds_cd}">${allGoodsList.gds_nm}</option>
-                <%--<input type="hidden" name="goodsidx" value="${requestScope.gds_cd}">--%>
+                <option value="${allGoodsList.gdsCd}">${allGoodsList.gdsNm}</option>
+                <%--<input type="hidden" name="goodsidx" value="${requestScope.gdsCd}">--%>
             </c:forEach>
         </select><br>
         투자 금액(원) : <input type="number" name="mymoney" min="1" required><br>

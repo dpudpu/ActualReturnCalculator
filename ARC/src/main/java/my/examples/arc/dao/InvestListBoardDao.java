@@ -27,8 +27,8 @@ public class InvestListBoardDao {
 
             while (rs.next()) {
                 ARCGdsMstDto arcGdsMstDto = new ARCGdsMstDto();
-                arcGdsMstDto.setGds_cd(rs.getInt(1));
-                arcGdsMstDto.setGds_nm(rs.getString(2));
+                arcGdsMstDto.setGdsCd(rs.getInt(1));
+                arcGdsMstDto.setGdsNm(rs.getString(2));
                 list.add(arcGdsMstDto);
             }
         } catch (Exception ex) {
