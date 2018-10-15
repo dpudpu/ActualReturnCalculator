@@ -48,12 +48,11 @@ public class InvestListBoardDao {
 
         List<MyGoodsListDto> list = new ArrayList<>();
         try{
-            String sql=null;
             // 투자리스트 게시판
-            sql =   "SELECT m.gds_nm , gds.prf_rto, inv.inv_prod, inv.my_inv_prc, gds.cms\n" +
+            String sql =
+            "SELECT m.gds_nm , gds.prf_rto, inv.inv_prod, inv.my_inv_prc, gds.cms\n" +
                     "FROM my_inv_lst inv, inv_gds_lst gds INNER JOIN gds_mst m ON gds.gds_cd = m.gds_cd\n" +
                     "WHERE inv.gds_cd = gds.gds_cd LIMIT ?,?";
-
             ps = conn.prepareStatement(sql);
             ps.setInt(1,Integer.parseInt(pg)*posts-(posts-1));
             ps.setInt(2,Integer.parseInt(pg)*posts);
@@ -66,7 +65,7 @@ public class InvestListBoardDao {
                 myGoodsListDto.setGoodsName(rs.getString("gds_nm"));
                 myGoodsListDto.setPrfRto(rs.getLong("prf_rto"));
                 myGoodsListDto.setInvestPeriod(rs.getInt("inv_prod"));
-                myGoodsListDto.setMyPrice(rs.getInt("A.my_inv_prc"));
+                myGoodsListDto.setMyPrice(rs.getInt("my_inv_prc"));
                 myGoodsListDto.setCms(rs.getDouble("cms"));
                 myGoodsListDto.setProfits(myGoodsListDto.getMyPrice()+myGoodsListDto.getMyPrice()*myGoodsListDto.getPrfRto()/100);
                 list.add(myGoodsListDto);
@@ -74,6 +73,7 @@ public class InvestListBoardDao {
 
         }catch (Exception ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         }finally {
             DbUtil.close(conn, ps, rs);
         }

@@ -97,7 +97,6 @@
 
             <c:if test="${sessionScope.user != null}">
               <a href="/investment/input" class="btn btn-primary pull-right">내 투자목록 등록</a>
-            <c:if test="${sessionScope.user == null}">
             </c:if>
         </div>
     </div>
@@ -119,16 +118,10 @@
         <a href="/reply/modify">수정</a>
         <form method="post" action="/reply/delete">
             <input type="hidden" name="reply_idx" value="${replylist.reply_idx}" />
-            <c:if test="${sessionScope.user} eq ${replylist.reply_idx}}">
             <button value="삭제">삭제</button>
-            </c:if>
         </form>
-        <<c:if test="${sessionScope.user} eq ${replylist.reply_idx}">
         <a href="/reply/tagreply">댓글</a><br>
-        </c:if>
-
     </c:forEach>
 </div>
-
 </body>
 </html>
