@@ -1,7 +1,6 @@
 package my.examples.arc.servlet;
 
-import my.examples.arc.dao.ArcDao;
-import my.examples.arc.dto.ARCReplyDto;
+import my.examples.arc.dao.GoodsPostDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +21,8 @@ public class ARCReplyDeleteServlet extends HttpServlet {
 
         // 삭제하려는 댓글의 id와 현재 로그인 한 id가 일치하는 경우
         int reply_idx =  Integer.parseInt(req.getParameter("reply_idx"));
-        ArcDao arcDao = new ArcDao();
-        arcDao.deleteReply(reply_idx);
+        GoodsPostDao goodsPostDao = new GoodsPostDao();
+        goodsPostDao.deleteReply(reply_idx);
 
         resp.sendRedirect("/list");
 

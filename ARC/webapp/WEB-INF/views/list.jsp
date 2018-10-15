@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jang
-  Date: 18. 10. 8
-  Time: 오후 1:55
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -101,7 +94,11 @@
                 <c:forEach begin="1" end="${requestScope.totalPage}" step="1" var="page">
                     <a href="/list?pg=${page}&posts=${posts}" class="btn btn-success"><b>${page}</b></a>
                 </c:forEach>
-            <a href="/investment/input" class="btn btn-primary pull-right">내 투자목록 등록</a>
+
+            <c:if test="${sessionScope.user != null}">
+              <a href="/investment/input" class="btn btn-primary pull-right">내 투자목록 등록</a>
+            <c:if test="${sessionScope.user == null}">
+            </c:if>
         </div>
     </div>
 
@@ -122,9 +119,14 @@
         <a href="/reply/modify">수정</a>
         <form method="post" action="/reply/delete">
             <input type="hidden" name="reply_idx" value="${replylist.reply_idx}" />
+            <c:if test="${sessionScope.user} eq ${replylist.reply_idx}}">
             <button value="삭제">삭제</button>
+            </c:if>
         </form>
+        <<c:if test="${sessionScope.user} eq ${replylist.reply_idx}">
         <a href="/reply/tagreply">댓글</a><br>
+        </c:if>
+
     </c:forEach>
 </div>
 
