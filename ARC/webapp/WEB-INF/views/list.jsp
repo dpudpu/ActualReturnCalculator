@@ -117,13 +117,11 @@
         ${replylist.content}<br><br>
         <a href="/reply/modify">수정</a>
         <form method="post" action="/reply/delete">
-            <input type="hidden" name="reply_idx" value="${replylist.replyIdx}" />
+            <input type="hidden" name="reply_idx" value="${replylist.reply_idx}" />
             <button value="삭제">삭제</button>
         </form>
-            <a href="/reply/tagreply">댓글</a><br>
-
+        <a href="/reply/tagreply">댓글</a><br>
     </c:forEach>
 </div>
-
 </body>
 </html>
