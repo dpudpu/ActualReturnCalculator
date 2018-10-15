@@ -101,7 +101,7 @@
                 <c:forEach begin="1" end="${requestScope.totalPage}" step="1" var="page">
                     <a href="/list?pg=${page}&posts=${posts}" class="btn btn-success"><b>${page}</b></a>
                 </c:forEach>
-            <a href="" class="btn btn-primary pull-right">글쓰기</a>
+            <a href="/investment/input" class="btn btn-primary pull-right">내 투자목록 등록</a>
         </div>
     </div>
 
