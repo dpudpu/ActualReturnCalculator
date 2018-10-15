@@ -113,7 +113,7 @@
         <input type="submit" value="등록"><br><br>
     </form>
     <c:forEach items="${requestScope.replylist}" var="replylist">
-        ${replylist.member_id} 작성 시간 : ${replylist.getReply_time()}<br>
+        ${replylist.memberId} 작성 시간 : ${replylist.getReplyTime()}<br>
         ${replylist.content}<br><br>
         <a href="/reply/modify">수정</a>
         <form method="post" action="/reply/delete">

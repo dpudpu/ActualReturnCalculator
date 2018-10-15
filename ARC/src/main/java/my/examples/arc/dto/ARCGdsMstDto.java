@@ -1,22 +1,22 @@
 package my.examples.arc.dto;
 
 public class ARCGdsMstDto {
-    private int gds_cd;
-    private String gds_nm;
+    private int gdsCd;
+    private String gdsNm;
 
-    public int getGds_cd() {
-        return gds_cd;
+    public int getGdsCd() {
+        return gdsCd;
     }
 
-    public void setGds_cd(int gds_cd) {
-        this.gds_cd = gds_cd;
+    public void setGdsCd(int gdsCd) {
+        this.gdsCd = gdsCd;
     }
 
-    public String getGds_nm() {
-        return gds_nm;
+    public String getGdsNm() {
+        return gdsNm;
     }
 
-    public void setGds_nm(String gds_nm) {
-        this.gds_nm = gds_nm;
+    public void setGdsNm(String gdsNm) {
+        this.gdsNm = gdsNm;
     }
 }
