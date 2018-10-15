@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/signUp")
 public class SignUpServlet extends HttpServlet {
@@ -33,7 +34,9 @@ public class SignUpServlet extends HttpServlet {
                 throw new Exception();
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("회원가입 INSERT 안됐음.");
+            PrintWriter out = resp.getWriter();
+            out.println("회원가입 실패");
+            out.close();
         }
 
         resp.sendRedirect("/list");

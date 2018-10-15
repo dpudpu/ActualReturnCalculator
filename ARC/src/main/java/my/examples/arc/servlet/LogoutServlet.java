@@ -15,7 +15,7 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.removeAttribute("user");
 
-        // /guestbook/list로 redirect한다.
+        // /list로 redirect한다.
         resp.sendRedirect("/list");
     }
 }
