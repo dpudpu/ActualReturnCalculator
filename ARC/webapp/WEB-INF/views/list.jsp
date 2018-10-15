@@ -97,7 +97,6 @@
 
             <c:if test="${sessionScope.user != null}">
               <a href="/investment/input" class="btn btn-primary pull-right">내 투자목록 등록</a>
-            <c:if test="${sessionScope.user == null}">
             </c:if>
         </div>
     </div>
@@ -114,18 +113,14 @@
         <input type="submit" value="등록"><br><br>
     </form>
     <c:forEach items="${requestScope.replylist}" var="replylist">
-        ${replylist.member_id} 작성 시간 : ${replylist.getReply_time()}<br>
+        ${replylist.memberId} 작성 시간 : ${replylist.getReplyTime()}<br>
         ${replylist.content}<br><br>
         <a href="/reply/modify">수정</a>
         <form method="post" action="/reply/delete">
-            <input type="hidden" name="reply_idx" value="${replylist.reply_idx}" />
-            <c:if test="${sessionScope.user} eq ${replylist.reply_idx}}">
+            <input type="hidden" name="reply_idx" value="${replylist.replyIdx}" />
             <button value="삭제">삭제</button>
-            </c:if>
         </form>
-        <<c:if test="${sessionScope.user} eq ${replylist.reply_idx}">
-        <a href="/reply/tagreply">댓글</a><br>
-        </c:if>
+            <a href="/reply/tagreply">댓글</a><br>
 
     </c:forEach>
 </div>

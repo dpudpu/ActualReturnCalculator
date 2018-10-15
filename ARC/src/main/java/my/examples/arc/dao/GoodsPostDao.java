@@ -54,8 +54,8 @@ public class GoodsPostDao {
             String sql = "INSERT INTO mb_rpy (mb_idx, prt_idx, content)"
                     + "VALUES(?, ?, ?)";
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, arcReplyDto.getMember_idx());
-            ps.setInt(2, arcReplyDto.getParent_idx());
+            ps.setInt(1, arcReplyDto.getMemberIdx());
+            ps.setInt(2, arcReplyDto.getParentIdx());
             ps.setString(3, arcReplyDto.getContent());
             count = ps.executeUpdate();
 
@@ -86,12 +86,12 @@ public class GoodsPostDao {
 
             while (rs.next()) {
                 ARCReplyDto arcReplyDto = new ARCReplyDto();
-                arcReplyDto.setMember_idx(rs.getInt(1));
-                arcReplyDto.setMember_id(rs.getString(2));
-                arcReplyDto.setReply_idx(rs.getInt(3));
-                arcReplyDto.setParent_idx(rs.getInt(4));
+                arcReplyDto.setMemberIdx(rs.getInt(1));
+                arcReplyDto.setMemberId(rs.getString(2));
+                arcReplyDto.setReplyIdx(rs.getInt(3));
+                arcReplyDto.setParentIdx(rs.getInt(4));
                 arcReplyDto.setContent(rs.getString(5));
-                arcReplyDto.setReply_time(rs.getTimestamp(6, cal).getTime());
+                arcReplyDto.setReplyTime(rs.getTimestamp(6, cal).getTime());
 
                 list.add(arcReplyDto);
             }
@@ -104,7 +104,7 @@ public class GoodsPostDao {
         return list;
     }
 
-    public int deleteReply(int reply_idx) {
+    public int deleteReply(int replyIdx) {
         Connection conn = null;
         PreparedStatement ps = null;
         conn = DbUtil.connect();
@@ -113,7 +113,7 @@ public class GoodsPostDao {
         try {
             String sql = "DELETE FROM mb_rpy WHERE rpy_idx = ?";
             ps = conn.prepareStatement(sql);
-            ps.setLong(1, reply_idx);
+            ps.setLong(1, replyIdx);
             count = ps.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -124,7 +124,7 @@ public class GoodsPostDao {
         return count;
     }
 
-    public int modifyReply(int reply_idx, String content) {
+    public int modifyReply(int replyIdx, String content) {
         Connection conn = null;
         PreparedStatement ps = null;
         conn = DbUtil.connect();
@@ -134,7 +134,7 @@ public class GoodsPostDao {
             String sql = "UPDATE mb_rpy SET content = ? WHERE rpy_idx = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, content);
-            ps.setInt(2, reply_idx);
+            ps.setInt(2, replyIdx);
             count = ps.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
