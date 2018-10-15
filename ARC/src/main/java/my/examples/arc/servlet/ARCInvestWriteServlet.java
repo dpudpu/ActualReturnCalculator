@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +40,24 @@ public class ARCInvestWriteServlet extends HttpServlet {
                     new ARCInvInputDto(invPrdIdx, invMoney, invPeriod);
 
             GoodsPostDao goodsPostDao = new GoodsPostDao();
-            goodsPostDao.addMyGoodsList(arcInvInputDto);
+            try {
+                goodsPostDao.addMyGoodsList(arcInvInputDto);
+            } catch (RuntimeException re) {
+                PrintWriter out = resp.getWriter();
+                out.println("<script language='javascript'>");
+                out.println("alert('내 투자 상품 등록에 실패하였습니다.');");
+                out.println("window.location.href = \"/\";");
+                out.println("</script>");
+                out.close();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
+            PrintWriter out = resp.getWriter();
+            out.println("<script language='javascript'>");
+            out.println("alert('잘못된 값을 전달받았습니다.');");
+            out.println("window.location.href = \"/\";");
+            out.println("</script>");
+            out.close();
         }
 
         resp.sendRedirect("/list");

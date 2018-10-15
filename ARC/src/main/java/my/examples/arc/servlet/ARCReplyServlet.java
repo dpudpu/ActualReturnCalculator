@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/reply")
 public class ARCReplyServlet extends HttpServlet {
@@ -17,7 +18,7 @@ public class ARCReplyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         GoodsPostDao goodsPostDao = new GoodsPostDao();
         req.setCharacterEncoding("UTF-8");
-        String content = req.getParameter("reply_content");
+        String content = req.getParameter("replyContent");
         try {
             if (!content.isEmpty()) {
                 // 아직 로그인 기능 구현이 되지 않아 member_idx = 1로 고정
@@ -30,6 +31,13 @@ public class ARCReplyServlet extends HttpServlet {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+
+            PrintWriter out = resp.getWriter();
+            out.println("<script language='javascript'>");
+            out.println("alert('댓글을 불러오는 도중 오류가 발생하였습니다.');");
+            out.println("window.location.href = \"/\";");
+            out.println("</script>");
+            out.close();
         }
         resp.sendRedirect("/list");
     }

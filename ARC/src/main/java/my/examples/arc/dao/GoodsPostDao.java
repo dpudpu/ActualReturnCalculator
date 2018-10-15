@@ -34,6 +34,7 @@ public class GoodsPostDao {
             count = ps.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         } finally {
             DbUtil.close(conn, ps);
         }
@@ -61,6 +62,7 @@ public class GoodsPostDao {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         } finally {
             DbUtil.close(conn, ps);
         }
@@ -97,6 +99,7 @@ public class GoodsPostDao {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         } finally {
             DbUtil.close(conn, ps, rs);
         }
@@ -117,6 +120,7 @@ public class GoodsPostDao {
             count = ps.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         } finally {
             DbUtil.close(conn, ps);
         }
@@ -138,6 +142,7 @@ public class GoodsPostDao {
             count = ps.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         } finally {
             DbUtil.close(conn, ps);
         }
