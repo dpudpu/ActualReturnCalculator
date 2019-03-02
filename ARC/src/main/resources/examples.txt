@@ -1,0 +1,5 @@
+host=localhost:3306
+database=arc?useSSL=false& serverTimezone=UTC
+user=jun
+password=1234
+
